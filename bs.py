@@ -19,6 +19,10 @@
 
 from math import log,sqrt,exp
 from scipy import stats
+from os import sys, path
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+from brent import *
+
 def bs_call(spot, strike, r, d, vol, expiry):
 	moneyness = log(spot / strike)
 	stddev = vol * sqrt(expiry);
@@ -109,5 +113,29 @@ def bs_put_rho( spot,  strike,  r,  d,  vol,  expiry):
 	
         return -strike * expiry * exp(-r * expiry) * stats.norm.cdf(-d2)
 	
+def impv_bs(spot, strike, r, d, expiry, price, optiontype): 
+    low = 0.000001
+    high = 0.3
+    if (optiontype != "EURO_CALL" and optiontype != "EURO_PUT"):
+        return "NAN1"
+    if(optiontype == "EURO_CALL"):
+        ce = bs_call(spot, strike, r, d, high, expiry)
+    else:
+        ce = bs_put(spot, strike, r, d, high, expiry)
+
+    while (ce < price): 
+        high *= 2.0
+        if (high > 1e10):
+            return "NAN2"
+        if(optiontype == "EURO_CALL"):
+            ce = bs_call(spot, strike, r, d, high, expiry)
+        else:
+            ce = bs_put(spot, strike, r, d, high, expiry)
+	
+    if(optiontype == "EURO_CALL"):	
+        return brent(low, high, price, bs_call, None, None, spot, strike, r, d, expiry, 0, 0)
+    else:
+        return brent(low, high, price, bs_put,  None, None, spot, strike, r, d, expiry, 0, 0)
+
 
 
