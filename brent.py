@@ -14,9 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+import decimal
 
 def brent(a, b,  price, func, func2, func3, spot, strike, r,  d,  expiry, ssteps,tsteps):
-    dd = "NAN"    
+    dd = None    
     niters = 0
     if(func):
           fa = func(spot, strike, r, d, a, expiry)
@@ -36,7 +37,8 @@ def brent(a, b,  price, func, func2, func3, spot, strike, r,  d,  expiry, ssteps
 	
 	#root is not bracketed 
     if ((fa - price) * (fb - price) >= 0.0):
-        return "NAN1"
+        
+        return "NAN1 fa fb same direction"
 	#swap 
     if (abs(fa) < abs(fb)):#>OR<?
          t = a 
@@ -46,7 +48,7 @@ def brent(a, b,  price, func, func2, func3, spot, strike, r,  d,  expiry, ssteps
          fa = fb
          fb = ft
 	
-    c = a,
+    c = a
     fc = fa
     mflag = 1
     while (niters < 500): 
@@ -59,6 +61,7 @@ def brent(a, b,  price, func, func2, func3, spot, strike, r,  d,  expiry, ssteps
         else:
 			#secant method 
             s = b - fb * (b - a) / (fb - fa)
+       
         if ((s < 0.25 * (3.0 * a + b) or s > b) or( mflag and abs(s - b) >= 0.5 * abs(b - c)) or(not mflag and abs(s - b) >= 0.5 * abs(c - dd)) or( mflag and abs(b - c) < 0.0001) or(not mflag and abs(c - dd) < 0.0001)):
 			#bisection method
             s = 0.5 * (a + b)
@@ -92,5 +95,5 @@ def brent(a, b,  price, func, func2, func3, spot, strike, r,  d,  expiry, ssteps
             fb = ft
 		
         niters += 1	
-    return "NAN2"
+    return "NAN500"
 
