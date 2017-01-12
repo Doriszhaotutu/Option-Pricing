@@ -20,7 +20,7 @@ from scipy import stats
 from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from bs import *
-
+#计算期货期权时，b的值需要设置为0
 def baw_call( spot,  strike,  r,  b,  vol,  expiry): 
      M = 2.0 * r / (vol * vol)
      N = 2.0 *  b / (vol * vol)

@@ -22,7 +22,8 @@ from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from brent import *
 
-# FIXME 
+# FIXME
+#计算期货期权时，需要设置d的值与利率相等 
 def bi_amer_call( spot,  strike,  r,  d,  vol,  expiry,  steps):
     dt = expiry / steps
     # erest rate for each step 
