@@ -117,12 +117,12 @@ def baw_put_gamma( spot,  strike,  r,  b,  vol,  expiry):
 	
 	# FIXME 
 def baw_call_theta( spot,  strike,  r,  b,  vol,  expiry): 
-    return (baw_call(spot, strike, r, b, vol, 1.01 * expiry) - baw_call(spot, strike, r, b, vol, 0.99 * expiry)) / (0.02 * expiry)
+    return (baw_call(spot, strike, r, b, vol, 1.01 * expiry) - baw_call(spot, strike, r, b, vol, 0.99 * expiry)) / ( - 0.02 * expiry)
 	
 	
 	# FIXME 
 def baw_put_theta( spot,  strike,  r,  b,  vol,  expiry): 
-    return (baw_put(spot, strike, r, b, vol, 1.01 * expiry) - baw_put(spot, strike, r, b, vol, 0.99 * expiry)) / (0.02 * expiry)
+    return (baw_put(spot, strike, r, b, vol, 1.01 * expiry) - baw_put(spot, strike, r, b, vol, 0.99 * expiry)) / (- 0.02 * expiry)
 	
 	
 	# FIXME 
