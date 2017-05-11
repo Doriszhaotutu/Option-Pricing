@@ -48,12 +48,13 @@ def baw_call( spot,  strike,  r,  b,  vol,  expiry):
         Ss = S0
      else:
         Ss = Si
-     ce = bs_call(spot, strike, r, r - b, vol, expiry)
+     
      if (spot >= Ss):
         ca = spot - strike
      else: 
         d1 = (log(Ss / strike) +  b * expiry + 0.5 * stddev * stddev) / stddev
         A2 = (Ss / q2) * (1.0 - exp(-(r - b) * expiry) * stats.norm.cdf(d1, 0, 1))
+        ce = bs_call(spot, strike, r, r - b, vol, expiry)        
         ca = ce + A2 * pow(spot / Ss, q2)
 		
      return max(ca,ce)
